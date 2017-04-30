@@ -1,0 +1,22 @@
+<%= form_for(@secret_code) do |f| %>
+  <% if @secret_code.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@secret_code.errors.count, "error") %> prohibited this secret_code from being saved:</h2>
+
+      <ul>
+      <% @secret_code.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :code %>
+    <%= f.text_field :code , class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Create', class: "btn btn-default" %>
+  </div>
+<% end %>

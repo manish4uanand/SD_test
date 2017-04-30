@@ -1,0 +1,42 @@
+<h1>
+  Listing Secret Codes 
+</h1>
+<% if current_user.id == 1 %>
+<div class="well">
+  <%= select_tag "code_count", options_for_select(SDConstant::SECRETECODECOUNT), class: ""  %>
+  <%= link_to "Generate Code", {}, class: "btn btn-default", id: "generate_code" %>
+</div>
+<% end %>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <% if current_user.id == 1 %>
+        <th>Assign Email</th>
+      <% else %>
+        <th>Assigned Email</th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @secret_codes.each do |secret_code| %>
+      <tr>
+        <td class="code_td"><%= secret_code.code %></td>
+        <td>
+          <% if current_user.id == 1 %>
+            <%= text_field_tag "code", secret_code.email, class: "form-control" %>            
+          <% else %>
+            <%= text_field_tag "code", secret_code.email, class: "form-control", readonly: "readonly" %>
+          <% end %>
+          <% if current_user.id == 1 %>            
+            <%= button_tag "Assign", class: "btn btn-default assign_email_to_code" %>
+          <% end %>
+        </td>        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @secret_codes, renderer: BootstrapPagination::Rails %>
